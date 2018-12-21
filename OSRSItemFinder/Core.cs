@@ -4,25 +4,29 @@ using System.Net;
 using System.IO;
 using System.Drawing;
 using Newtonsoft.Json;
-using System.Windows.Input;
+
 
 
 namespace OSRSItemFinder
 {
-   
-    class ItemHandler
+    public class Items
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    internal class ItemHandler
     {
         string itemUrl = "http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json?item=";
 
         public dynamic Initilize()
         {
             string text = System.IO.File.ReadAllText(@"items.json");
-            dynamic result = JsonConvert.DeserializeObject<dynamic>(text);
-            
+            List<Items> result = JsonConvert.DeserializeObject<List<Items>>(text);
+
             return result;
-            
+
         }
-       
         
         public dynamic GetItemInfo(int itemid, char k)
         {
@@ -44,58 +48,17 @@ namespace OSRSItemFinder
             }
         }
 
-        public Image DownloadImageFromUrl(string imageUrl)
-        {
-            Image image = null;
-
-            try
-            {
-                HttpWebRequest webRequest = (HttpWebRequest)HttpWebRequest.Create(imageUrl);
-                webRequest.AllowWriteStreamBuffering = true;
-                webRequest.Timeout = 30000;
-
-                WebResponse webResponse = webRequest.GetResponse();
-
-                Stream stream = webResponse.GetResponseStream();
-
-                image = Image.FromStream(stream);
-
-                webResponse.Close();
-            }
-            catch (Exception)
-            {
-                ;
-                return null;
-            }
-
-            return image;
-        }
-
-
         public Dictionary<int,string> SelectItem(string itemsel)
         {
-            dynamic results = this.Initilize();
-            List<string> lista_name = new List<string>();
-            List<int> lista_id = new List<int>();
-            Dictionary<int, string> pal= new Dictionary<int, string>();
-            int pituus;
+            List<Items> results = this.Initilize();
+            Dictionary<int, string> pal = new Dictionary<int, string>();
 
-            for (int i = 0; i < results.Count; i++)
+            foreach (Items item in results)
             {
-                string k = results[i]["name"].ToString().ToLower();
-                int p = Convert.ToInt32(results[i]["id"]);
-
-                if (k.Contains(itemsel.ToLower()))
-                {
-                    pal.Add(p,k);
-                    
-                }
+                pal.Add(item.Id, item.Name);
             }
 
-            pituus = lista_name.Count;
-
             return pal;
-    
 
         }
 

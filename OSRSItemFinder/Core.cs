@@ -1,30 +1,49 @@
-using System;
 using System.Collections.Generic;
 using System.Net;
 using System.IO;
-using System.Drawing;
 using Newtonsoft.Json;
-using System.Windows.Input;
-
+using System;
 
 namespace OSRSItemFinder
 {
-   
-    class ItemHandler
+    public class Items
     {
-        string itemUrl = "http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json?item=";
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
 
-        public dynamic Initilize()
+    static class ItemHandler
+    {
+        static readonly string itemUrl = "http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json?item=";
+        static public string jsonUrl = "items.json";
+        static public List<Items> result;
+
+        // Checking if item file exists
+        public static bool CheckFile()
         {
-            string text = System.IO.File.ReadAllText(@"items.json");
-            dynamic result = JsonConvert.DeserializeObject<dynamic>(text);
+            if (File.Exists(jsonUrl))
+            {
+                try
+                {
+                    string text = File.ReadAllText(jsonUrl);
+                    result = JsonConvert.DeserializeObject<List<Items>>(text);
+                    return true;
+                }
+                catch (Exception)
+                {
+                    
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
             
-            return result;
-            
+
         }
-       
         
-        public dynamic GetItemInfo(int itemid, char k)
+        public static dynamic GetItemInfo(int itemid, char k)
         {
             
             var response = new WebClient().DownloadString(itemUrl+itemid);
@@ -36,66 +55,29 @@ namespace OSRSItemFinder
                 case 'p':
                     return response_json["item"]["current"]["price"] + " GP";
                 case 'i':
-                    
                     return response_json["item"]["icon"];
+                case 'm':
+                    if (response_json["item"]["members"] == "false"){return false;}
+                    else { return true; }
                 default:
                     return null;
                    
             }
         }
 
-        public Image DownloadImageFromUrl(string imageUrl)
+        public static Dictionary<int,string> SelectItem(string itemsel)
         {
-            Image image = null;
-
-            try
+            Dictionary<int, string> pal = new Dictionary<int, string>();
+            foreach (Items item in result)
             {
-                HttpWebRequest webRequest = (HttpWebRequest)HttpWebRequest.Create(imageUrl);
-                webRequest.AllowWriteStreamBuffering = true;
-                webRequest.Timeout = 30000;
-
-                WebResponse webResponse = webRequest.GetResponse();
-
-                Stream stream = webResponse.GetResponseStream();
-
-                image = Image.FromStream(stream);
-
-                webResponse.Close();
-            }
-            catch (Exception)
-            {
-                ;
-                return null;
-            }
-
-            return image;
-        }
-
-
-        public Dictionary<int,string> SelectItem(string itemsel)
-        {
-            dynamic results = this.Initilize();
-            List<string> lista_name = new List<string>();
-            List<int> lista_id = new List<int>();
-            Dictionary<int, string> pal= new Dictionary<int, string>();
-            int pituus;
-
-            for (int i = 0; i < results.Count; i++)
-            {
-                string k = results[i]["name"].ToString().ToLower();
-                int p = Convert.ToInt32(results[i]["id"]);
-
-                if (k.Contains(itemsel.ToLower()))
+                if (item.Name.ToLower().Contains(itemsel.ToLower()))
                 {
-                    pal.Add(p,k);
-                    
+                    pal.Add(item.Id, item.Name);
                 }
+                
             }
-
-            pituus = lista_name.Count;
 
             return pal;
-    
 
         }
 

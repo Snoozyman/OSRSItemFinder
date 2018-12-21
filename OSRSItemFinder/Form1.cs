@@ -50,12 +50,14 @@ namespace OSRSItemFinder
                     asd.Add(item.Key, item.Value);
                 }
             }
+            /*
             catch (NullReferenceException)
             {
-                toolStripStatusLabel1.Text = "Error: Please open the item file";
+                toolStripStatusLabel1.Text = "Error: Please open the item file"; 
                 MessageBox.Show(this, "Please open the item file from the menu", "Error");
-                textBox1.Clear();
+                
             }
+            */
             catch (Exception ex)
             {
                 toolStripStatusLabel1.Text = "Error";

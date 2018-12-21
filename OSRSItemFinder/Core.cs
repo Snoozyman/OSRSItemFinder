@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Net;
 using System.IO;
@@ -20,6 +19,7 @@ namespace OSRSItemFinder
         static public string jsonUrl = "items.json";
         static public List<Items> result;
 
+        // Checking if item file exists
         public static bool CheckFile()
         {
             try

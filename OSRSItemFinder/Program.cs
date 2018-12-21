@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace OSRSItemFinder
 {
     static class Program
@@ -17,6 +18,9 @@ namespace OSRSItemFinder
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
+            
         }
+
+        
     }
 }

@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.IO;
 using Newtonsoft.Json;
-
-
+using System;
 
 namespace OSRSItemFinder
 {
@@ -15,23 +14,32 @@ namespace OSRSItemFinder
 
     static class ItemHandler
     {
-        static string itemUrl = "http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json?item=";
+        static readonly string itemUrl = "http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json?item=";
         static public string jsonUrl = "items.json";
         static public List<Items> result;
 
         // Checking if item file exists
         public static bool CheckFile()
         {
-            try
+            if (File.Exists(jsonUrl))
             {
-                string text = File.ReadAllText(jsonUrl);
-                result= JsonConvert.DeserializeObject<List<Items>>(text);
-                return true;
+                try
+                {
+                    string text = File.ReadAllText(jsonUrl);
+                    result = JsonConvert.DeserializeObject<List<Items>>(text);
+                    return true;
+                }
+                catch (Exception)
+                {
+                    
+                    return false;
+                }
             }
-            catch (FileNotFoundException)
+            else
             {
                 return false;
             }
+            
 
         }
         

@@ -270,8 +270,8 @@
             // mOiToolStripMenuItem
             // 
             this.mOiToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.exitToolStripMenuItem,
-            this.openJSONFileToolStripMenuItem});
+            this.openJSONFileToolStripMenuItem,
+            this.exitToolStripMenuItem});
             this.mOiToolStripMenuItem.Name = "mOiToolStripMenuItem";
             this.mOiToolStripMenuItem.Size = new System.Drawing.Size(58, 24);
             this.mOiToolStripMenuItem.Text = "Menu";
@@ -286,8 +286,8 @@
             // openJSONFileToolStripMenuItem
             // 
             this.openJSONFileToolStripMenuItem.Name = "openJSONFileToolStripMenuItem";
-            this.openJSONFileToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
-            this.openJSONFileToolStripMenuItem.Text = "open JSON file";
+            this.openJSONFileToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.openJSONFileToolStripMenuItem.Text = "Open JSON file";
             this.openJSONFileToolStripMenuItem.Click += new System.EventHandler(this.openJSONFileToolStripMenuItem_Click);
             // 
             // openFileDialog1

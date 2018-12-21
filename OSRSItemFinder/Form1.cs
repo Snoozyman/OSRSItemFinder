@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace OSRSItemFinder
@@ -22,7 +16,10 @@ namespace OSRSItemFinder
             InitializeComponent();
             if (!ItemHandler.CheckFile())
             {
-                openFile();
+                string error = "Item file not found, please select a new JSON file";
+                toolStripStatusLabel1.Text = error;
+                //MessageBox.Show(error);
+                
             }
         }
 
@@ -39,14 +36,30 @@ namespace OSRSItemFinder
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
+
             listBox1.Items.Clear();
             asd.Clear();
             ClearForm();
 
-            foreach (KeyValuePair<int, string> item in ItemHandler.SelectItem(textBox1.Text))
+            try
             {
-                listBox1.Items.Add(item.Value);
-                asd.Add(item.Key, item.Value);
+
+                foreach (KeyValuePair<int, string> item in ItemHandler.SelectItem(textBox1.Text))
+                {
+                    listBox1.Items.Add(item.Value);
+                    asd.Add(item.Key, item.Value);
+                }
+            }
+            catch (NullReferenceException)
+            {
+                toolStripStatusLabel1.Text = "Error: Please open the item file";
+                MessageBox.Show(this, "Please open the item file from the menu", "Error");
+                textBox1.Clear();
+            }
+            catch (Exception ex)
+            {
+                toolStripStatusLabel1.Text = "Error";
+                MessageBox.Show(this, ex.ToString(), "Error");
             }
             
         }
@@ -114,8 +127,12 @@ namespace OSRSItemFinder
                     filePath = openFileDialog.FileName;
 
                     //Read the contents of the file into a stream
-                    toolStripStatusLabel1.Text = filePath;
+                    toolStripStatusLabel1.Text = "File loaded: " + filePath;
                     ItemHandler.jsonUrl = filePath;
+                }
+                else
+                {
+                    toolStripStatusLabel1.Text = "File not loaded";
                 }
             }
 

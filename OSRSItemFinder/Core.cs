@@ -3,6 +3,7 @@ using System.Net;
 using System.IO;
 using Newtonsoft.Json;
 using System;
+using System.Windows.Forms;
 
 namespace OSRSItemFinder
 {
@@ -12,28 +13,18 @@ namespace OSRSItemFinder
         public string Name { get; set; }
     }
 
-    static class ItemHandler
+    class ItemHandler
     {
-        static readonly string itemUrl = "http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json?item=";
-        static public string jsonUrl = "items.json";
-        static public List<Items> result;
+        readonly string itemUrl = "http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json?item=";
+        public string jsonUrl = "items.json";
+        public List<Items> result;
 
         // Checking if item file exists
-        public static bool CheckFile()
+        public bool CheckFile()
         {
             if (File.Exists(jsonUrl))
             {
-                try
-                {
-                    string text = File.ReadAllText(jsonUrl);
-                    result = JsonConvert.DeserializeObject<List<Items>>(text);
-                    return true;
-                }
-                catch (Exception)
-                {
-                    
-                    return false;
-                }
+                return true;
             }
             else
             {
@@ -42,8 +33,22 @@ namespace OSRSItemFinder
             
 
         }
-        
-        public static dynamic GetItemInfo(int itemid, char k)
+        public bool LoadFile()
+        {
+            try {
+                string text = File.ReadAllText(jsonUrl);
+                result = JsonConvert.DeserializeObject<List<Items>>(text);
+                MessageBox.Show("Loaded file");
+                return true;
+
+            }
+            catch (JsonSerializationException)
+            {
+                MessageBox.Show("JSON file has incorrect syntax");
+                return false;
+            }
+        }
+        public dynamic GetItemInfo(int itemid, char k)
         {
             
             var response = new WebClient().DownloadString(itemUrl+itemid);
@@ -65,10 +70,11 @@ namespace OSRSItemFinder
             }
         }
 
-        public static Dictionary<int,string> SelectItem(string itemsel)
+        public Dictionary<int,string> SelectItem(string itemsel)
         {
             Dictionary<int, string> pal = new Dictionary<int, string>();
-            foreach (Items item in result)
+            
+            foreach(Items item in result)
             {
                 if (item.Name.ToLower().Contains(itemsel.ToLower()))
                 {

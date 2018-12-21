@@ -34,6 +34,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -47,10 +49,16 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.mOiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openJSONFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.panel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -84,7 +92,7 @@
             // 
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 16;
-            this.listBox1.Location = new System.Drawing.Point(9, 65);
+            this.listBox1.Location = new System.Drawing.Point(9, 59);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(328, 468);
             this.listBox1.TabIndex = 5;
@@ -92,6 +100,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.checkBox1);
+            this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.webBrowser1);
             this.panel1.Controls.Add(this.textBox4);
             this.panel1.Controls.Add(this.label4);
@@ -104,18 +114,40 @@
             this.panel1.Size = new System.Drawing.Size(363, 308);
             this.panel1.TabIndex = 0;
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoCheck = false;
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(73, 231);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(118, 21);
+            this.checkBox1.TabIndex = 9;
+            this.checkBox1.Text = "Members only";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 143);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(34, 17);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Icon";
+            // 
             // webBrowser1
             // 
             this.webBrowser1.Location = new System.Drawing.Point(73, 118);
             this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(110, 81);
+            this.webBrowser1.ScrollBarsEnabled = false;
+            this.webBrowser1.Size = new System.Drawing.Size(93, 81);
             this.webBrowser1.TabIndex = 7;
             // 
             // textBox4
             // 
             this.textBox4.Location = new System.Drawing.Point(73, 85);
             this.textBox4.Name = "textBox4";
+            this.textBox4.ReadOnly = true;
             this.textBox4.Size = new System.Drawing.Size(257, 22);
             this.textBox4.TabIndex = 5;
             // 
@@ -132,14 +164,16 @@
             // 
             this.textBox3.Location = new System.Drawing.Point(73, 46);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(257, 22);
+            this.textBox3.ReadOnly = true;
+            this.textBox3.Size = new System.Drawing.Size(121, 22);
             this.textBox3.TabIndex = 3;
             // 
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(73, 10);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(257, 22);
+            this.textBox2.ReadOnly = true;
+            this.textBox2.Size = new System.Drawing.Size(121, 22);
             this.textBox2.TabIndex = 2;
             // 
             // label3
@@ -192,7 +226,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(12, 12);
+            this.tabControl1.Location = new System.Drawing.Point(12, 32);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(351, 573);
@@ -222,6 +256,44 @@
             this.tabPage2.Text = "Vendor Item";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mOiToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(902, 28);
+            this.menuStrip1.TabIndex = 8;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // mOiToolStripMenuItem
+            // 
+            this.mOiToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exitToolStripMenuItem,
+            this.openJSONFileToolStripMenuItem});
+            this.mOiToolStripMenuItem.Name = "mOiToolStripMenuItem";
+            this.mOiToolStripMenuItem.Size = new System.Drawing.Size(58, 24);
+            this.mOiToolStripMenuItem.Text = "Menu";
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // openJSONFileToolStripMenuItem
+            // 
+            this.openJSONFileToolStripMenuItem.Name = "openJSONFileToolStripMenuItem";
+            this.openJSONFileToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+            this.openJSONFileToolStripMenuItem.Text = "open JSON file";
+            this.openJSONFileToolStripMenuItem.Click += new System.EventHandler(this.openJSONFileToolStripMenuItem_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -229,7 +301,9 @@
             this.ClientSize = new System.Drawing.Size(902, 633);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.panel1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Form1";
             this.panel1.ResumeLayout(false);
@@ -239,6 +313,8 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -264,6 +340,13 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem mOiToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openJSONFileToolStripMenuItem;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 

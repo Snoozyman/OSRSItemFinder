@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.IO;
-using System.Drawing;
 using Newtonsoft.Json;
 
 
@@ -15,20 +14,28 @@ namespace OSRSItemFinder
         public string Name { get; set; }
     }
 
-    internal class ItemHandler
+    static class ItemHandler
     {
-        string itemUrl = "http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json?item=";
+        static string itemUrl = "http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json?item=";
+        static public string jsonUrl = "items.json";
+        static public List<Items> result;
 
-        public dynamic Initilize()
+        public static bool CheckFile()
         {
-            string text = System.IO.File.ReadAllText(@"items.json");
-            List<Items> result = JsonConvert.DeserializeObject<List<Items>>(text);
-
-            return result;
+            try
+            {
+                string text = File.ReadAllText(jsonUrl);
+                result= JsonConvert.DeserializeObject<List<Items>>(text);
+                return true;
+            }
+            catch (FileNotFoundException)
+            {
+                return false;
+            }
 
         }
         
-        public dynamic GetItemInfo(int itemid, char k)
+        public static dynamic GetItemInfo(int itemid, char k)
         {
             
             var response = new WebClient().DownloadString(itemUrl+itemid);
@@ -40,20 +47,20 @@ namespace OSRSItemFinder
                 case 'p':
                     return response_json["item"]["current"]["price"] + " GP";
                 case 'i':
-                    
                     return response_json["item"]["icon"];
+                case 'm':
+                    if (response_json["item"]["members"] == "false"){return false;}
+                    else { return true; }
                 default:
                     return null;
                    
             }
         }
 
-        public Dictionary<int,string> SelectItem(string itemsel)
+        public static Dictionary<int,string> SelectItem(string itemsel)
         {
-            List<Items> results = this.Initilize();
             Dictionary<int, string> pal = new Dictionary<int, string>();
-
-            foreach (Items item in results)
+            foreach (Items item in result)
             {
                 if (item.Name.ToLower().Contains(itemsel.ToLower()))
                 {

@@ -55,7 +55,11 @@ namespace OSRSItemFinder
 
             foreach (Items item in results)
             {
-                pal.Add(item.Id, item.Name);
+                if (item.Name.ToLower().Contains(itemsel.ToLower()))
+                {
+                    pal.Add(item.Id, item.Name);
+                }
+                
             }
 
             return pal;

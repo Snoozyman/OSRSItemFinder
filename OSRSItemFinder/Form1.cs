@@ -13,14 +13,14 @@ namespace OSRSItemFinder
     public partial class Form1 : Form
     {
         Dictionary<int, string> asd = new Dictionary<int, string>();
-
+        ItemHandler Kuk = new ItemHandler();
 
         public Form1()
         {
             InitializeComponent();
         }
 
-        ItemHandler Kuk = new ItemHandler();
+        
 
         public void button1_Click(object sender, EventArgs e)
         {
